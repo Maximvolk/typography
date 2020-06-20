@@ -1,0 +1,80 @@
+{% extends "editor/base.html" %}
+
+{% block style %}
+    .search_button {
+        align-self: flex-end;
+        padding-bottom: 17px;
+        margin-left: 20px;
+    }
+
+    .search_field {
+
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Авторы</h1>
+
+    <form action="/editor/authors" method="get" id="search-author-form" style="text-align: center; display: inline-block;">
+        <div class="row" style="margin-bottom: 30px;">
+            <div style="width: 300px;">
+                <div class="input-group form-element">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Имя</span>
+                    </div>
+                    <input type="text" class="form-control" name="fullName" value="{{ param }}">
+                </div>
+            </div>
+            <div class="search_button" style="width: 50px;">
+                <input type="submit" class="btn btn-outline-secondary" id="search" value="Поиск">
+            </div>
+        </div>
+    </form>
+
+    <div class="scrollable-table">
+        <div class="table-responsive">
+            <table id="findAuthorTable" class="table table-hover table-striped table-bordered dataTable">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>ИНН</th>
+                        <th>Паспорт</th>
+                        <th>Адрес</th>
+                        <th>Телефон</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in result %}
+                        <tr data-href="/editor/author/{{ row[0] }}">
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
+                            <td>{{ row[5] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    $('#search-author-form').submit(function () {
+    $(this)
+        .find('input[name]')
+        .filter(function () {
+            return !this.value;
+        })
+        .prop('name', '');
+    });
+
+    $('#findAuthorTable').DataTable({
+        scrollY: 500,
+        scrollCollapse: true,
+        paging: false,
+        searching: false,
+        ordering: false,
+        info: false
+    });
+{% endblock %}

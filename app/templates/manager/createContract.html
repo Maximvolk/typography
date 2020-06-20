@@ -1,0 +1,36 @@
+{% extends "manager/base.html" %}
+
+{% block style %}
+    .form-element {
+        margin-bottom: 10px;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Добавить контракт</h1>
+
+    <div style="width: 70%; text-align: center; display: inline-block;">
+        <form action="/manager/createContract" method="post" id="create-contract-form">
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Название книги</span>
+                </div>
+                <input type="text" class="form-control" name="book_title">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дата подписания</span>
+                </div>
+                <input type="date" class="form-control" name="sign_date">
+            </div>
+            <button class="btn btn-outline-secondary add-btn" type="submit">Добавить</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

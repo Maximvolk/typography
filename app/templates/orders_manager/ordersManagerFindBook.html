@@ -1,0 +1,59 @@
+{% extends "orders_manager/base.html" %}
+
+{% block style %}
+    .search_button {
+        align-self: flex-end;
+        padding-bottom: 17px;
+        margin-left: 20px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Книги</h1>
+
+    <form action="/ordersManager/books" method="get" id="search-book-form">
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-sm-5">
+                <div class="input-group form-element">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Название</span>
+                    </div>
+                    <input type="text" class="form-control" name="title" value="{{ params[0] }}">
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="input-group form-element">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Автор</span>
+                    </div>
+                    <input type="text" class="form-control" name="author_name" value="{{ params[1] }}">
+                </div>
+            </div>
+            <div class="search_button" style="width: 50px;">
+                <input type="submit" class="btn btn-outline-secondary" id="search" value="Поиск">
+            </div>
+        </div>
+    </form>
+
+    {% include "common/findBook.html" %}
+{% endblock %}
+
+{% block script %}
+    $('#search-book-form').submit(function () {
+    $(this)
+        .find('input[name]')
+        .filter(function () {
+            return !this.value;
+        })
+        .prop('name', '');
+    });
+
+    $('#findBookTable').DataTable({
+        scrollY: 500,
+        scrollCollapse: true,
+        paging: false,
+        searching: false,
+        ordering: false,
+        info: false
+    });
+{% endblock %}

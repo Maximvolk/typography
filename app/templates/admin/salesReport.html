@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Отчет о продажах</h1>
+
+    <div class="scrollable-table">
+        <div class="table-responsive">
+            <table id="salesReportTable" class="table table-hover table-striped table-bordered dataTable">
+                <thead>
+                    <tr>
+                        <th>Название книги</th>
+                        <th>Количество проданных экземпляров</th>
+                        <th>Выручка (руб.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in books %}
+                        <tr>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

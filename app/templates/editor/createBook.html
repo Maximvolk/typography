@@ -1,0 +1,110 @@
+{% extends "editor/base.html" %}
+
+{% block style %}
+    .form-element {
+        margin-bottom: 10px;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Добавить книгу</h1>
+
+    <div style="width: 70%; text-align: center; display: inline-block;">
+        <form action="/editor/createBook" method="post" id="create-book-form">
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Название</span>
+                </div>
+                <input type="text" class="form-control" name="title">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Тираж</span>
+                </div>
+                <input type="number" class="form-control" name="circulation">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дата издания</span>
+                </div>
+                <input type="date" class="form-control" name="release_date">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Себестоимость</span>
+                </div>
+                <input type="number" class="form-control" name="cost_price">
+            </div>
+
+            <h2 style="margin-bottom: 50px; margin-top: 40px; text-align: center;">Авторы</h2>
+            <div id="authors-controls" style="padding-left: 17px;">
+                <div class="row" style="margin-bottom: 30px;">
+                    <div style="width: 70%;">
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Имя</span>
+                            </div>
+                            <input type="text" class="form-control" name="author_name">
+                        </div>
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Гонорар</span>
+                            </div>
+                            <input type="number" class="form-control" name="author_fee">
+                        </div>
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-danger add-btn" onclick="removeAuthor(this)" type="button" value="-" disabled>
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-secondary add-btn" onclick="addAuthor(this)" type="button" value="+">
+                    </div>
+                </div>
+            </div>
+            <script>
+                function addAuthor(element) {
+                    let newAuthor = document.createElement('div');
+                    newAuthor.innerHTML =
+                        '<div class="row" style="margin-bottom: 30px;">\n' +
+                        '                    <div style="width: 70%;">\n' +
+                        '                        <div class="input-group form-element">\n' +
+                        '                            <div class="input-group-prepend">\n' +
+                        '                                <span class="input-group-text">Имя</span>\n' +
+                        '                            </div>\n' +
+                        '                            <input type="text" class="form-control" name="author_name">\n' +
+                        '                        </div>\n' +
+                        '                        <div class="input-group form-element">\n' +
+                        '                            <div class="input-group-prepend">\n' +
+                        '                                <span class="input-group-text">Гонорар</span>\n' +
+                        '                            </div>\n' +
+                        '                            <input type="number" class="form-control" name="author_fee">\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="control-authors-button-delete" style="width: 10%;">\n' +
+                        '                        <input class="btn btn-outline-danger add-btn" onclick="removeAuthor(this)" type="button" value="-">\n' +
+                        '                    </div>\n' +
+                        '                    <div class="control-authors-button-delete" style="width: 10%;">\n' +
+                        '                        <input class="btn btn-outline-secondary add-btn" onclick="addAuthor(this)" type="button" value="+">\n' +
+                        '                    </div>\n' +
+                        '                </div>';
+
+                    let refElement = element.parentElement.parentElement;
+                    document.getElementById("authors-controls").insertBefore(newAuthor.firstChild, refElement.nextSibling);
+                }
+
+                function removeAuthor(element) {
+                    element.parentElement.parentElement.remove();
+                }
+            </script>
+
+            <button class="btn btn-outline-secondary add-btn" type="submit">Добавить</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

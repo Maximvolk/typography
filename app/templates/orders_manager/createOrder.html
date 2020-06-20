@@ -1,0 +1,122 @@
+{% extends "orders_manager/base.html" %}
+
+{% block style %}
+    .form-element {
+        margin-bottom: 10px;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Добавить заказ</h1>
+
+    <div style="width: 70%; text-align: center; display: inline-block;">
+        <form action="/ordersManager/createOrder" method="post" id="create-order-form">
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Имя заказчика</span>
+                </div>
+                <input type="text" class="form-control" name="customer_name">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Адрес заказчика</span>
+                </div>
+                <input type="text" class="form-control" name="customer_address">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дата поступления</span>
+                </div>
+                <input type="date" class="form-control" name="receipt_date">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дата выполнения</span>
+                </div>
+                <input type="date" class="form-control" name="completion_date">
+            </div>
+
+            <h2 style="margin-bottom: 50px; margin-top: 40px; text-align: center;">Книги</h2>
+            <div id="authors-controls" style="padding-left: 17px;">
+                <div class="row" style="margin-bottom: 30px;">
+                    <div style="width: 70%;">
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Название</span>
+                            </div>
+                            <input type="text" class="form-control" name="title">
+                        </div>
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Количество</span>
+                            </div>
+                            <input type="number" class="form-control" name="books_amount">
+                        </div>
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Цена</span>
+                            </div>
+                            <input type="number" class="form-control" name="book_price">
+                        </div>
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-danger add-btn" onclick="removeBook(this)" type="button" value="-" disabled>
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-secondary add-btn" onclick="addBook(this)" type="button" value="+">
+                    </div>
+                </div>
+            </div>
+            <script>
+                function addBook(element) {
+                    let newBook = document.createElement('div');
+                    newBook.innerHTML =
+                        '<div class="row" style="margin-bottom: 30px;">\n' +
+                        '                    <div style="width: 70%;">\n' +
+                        '                        <div class="input-group form-element">\n' +
+                        '                            <div class="input-group-prepend">\n' +
+                        '                                <span class="input-group-text">Название</span>\n' +
+                        '                            </div>\n' +
+                        '                            <input type="text" class="form-control" name="title">\n' +
+                        '                        </div>\n' +
+                        '                        <div class="input-group form-element">\n' +
+                        '                            <div class="input-group-prepend">\n' +
+                        '                                <span class="input-group-text">Количество</span>\n' +
+                        '                            </div>\n' +
+                        '                            <input type="number" class="form-control" name="books_amount">\n' +
+                        '                        </div>\n' +
+                        '                        <div class="input-group form-element">\n' +
+                        '                            <div class="input-group-prepend">\n' +
+                        '                                <span class="input-group-text">Цена</span>\n' +
+                        '                            </div>\n' +
+                        '                            <input type="number" class="form-control" name="book_price">\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="control-authors-button-delete" style="width: 10%;">\n' +
+                        '                        <input class="btn btn-outline-danger add-btn" onclick="removeBook(this)" type="button" value="-">\n' +
+                        '                    </div>\n' +
+                        '                    <div class="control-authors-button-delete" style="width: 10%;">\n' +
+                        '                        <input class="btn btn-outline-secondary add-btn" onclick="addBook(this)" type="button" value="+">\n' +
+                        '                    </div>\n' +
+                        '                </div>';
+
+                    let refElement = element.parentElement.parentElement;
+                    document.getElementById("authors-controls").insertBefore(newBook.firstChild, refElement.nextSibling);
+                }
+
+                function removeBook(element) {
+                    element.parentElement.parentElement.remove();
+                }
+            </script>
+
+            <button class="btn btn-outline-secondary add-btn" type="submit">Добавить</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

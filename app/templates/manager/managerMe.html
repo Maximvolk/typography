@@ -1,0 +1,19 @@
+{% extends "manager/base.html" %}
+
+{% block style %}
+    .form-element {
+        margin-bottom: 10px;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 70px; text-align: center;">Редактировать личные данные</h1>
+
+    {% with position = "manager" %}
+        {% include "common/me.html" %}
+    {% endwith %}
+{% endblock %}

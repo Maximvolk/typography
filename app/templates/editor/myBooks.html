@@ -1,0 +1,82 @@
+{% extends "editor/base.html" %}
+
+{% block style %}
+    .search_button {
+        align-self: flex-end;
+        padding-bottom: 17px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Редактируемые мной ниги</h1>
+
+    <form action="/editor/me/books" method="get" id="my-books-filter">
+        <div class="row" style="margin-bottom: 30px;">
+            <div style="width: 70%;">
+                <div class="input-group form-element">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Показывать только ниги, в которых я - главный редактор</span>
+                    </div>
+                    <input id="is_main" type="checkbox" class="form-control" name="is_main">
+                </div>
+            </div>
+            <div class="search_button" style="width: 20%;">
+                <input type="submit" class="btn btn-outline-secondary" id="search" value="Применить">
+            </div>
+        </div>
+    </form>
+
+    <div class="scrollable-table">
+        <div class="table-responsive">
+            <table id="myBooksTable" class="table table-hover table-striped table-bordered dataTable">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Автор</th>
+                        <th>Тираж</th>
+                        <th>Дата издания</th>
+                        <th>Себестоимость (руб.)</th>
+                        <th>Авторский гонорар (руб.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in books %}
+                        <tr data-href="/editor/book/{{ row[0] }}">
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
+                            <td>{{ row[5] }}</td>
+                            <td>{{ row[6] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    let is_main = '{{ is_main }}';
+    if (is_main == 'True') {
+        document.getElementById('is_main').checked = true;
+    };
+
+    $('#my-books-filter').submit(function () {
+    $(this)
+        .find('input[name]')
+        .filter(function () {
+            return !this.value;
+        })
+        .prop('name', '');
+    });
+
+    $('#myBooksTable').DataTable({
+        scrollY: 500,
+        scrollCollapse: true,
+        paging: false,
+        searching: false,
+        ordering: false,
+        info: false
+    });
+{% endblock %}

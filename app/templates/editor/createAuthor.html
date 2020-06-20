@@ -1,0 +1,55 @@
+{% extends "editor/base.html" %}
+
+{% block style %}
+    .form-element {
+        margin-bottom: 10px;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Добавить автора</h1>
+
+    <div style="width: 70%; text-align: center; display: inline-block;">
+        <form action="/editor/createAuthor" method="post" id="create-author-form">
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">ФИО</span>
+                </div>
+                <input type="text" class="form-control" name="author_full_name">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">ИНН</span>
+                </div>
+                <input type="number" class="form-control" name="author_itn">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Серия/номер паспорта</span>
+                </div>
+                <input type="number" class="form-control" name="author_passport">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Адрес</span>
+                </div>
+                <input type="text" class="form-control" name="author_address">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Номер телефона</span>
+                </div>
+                <input type="number" class="form-control" name="author_phone_number">
+            </div>
+            <input type="hidden" name="form-type" value="author">
+            <button class="btn btn-outline-secondary add-btn" type="submit">Добавить</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

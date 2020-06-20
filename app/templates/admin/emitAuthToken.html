@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+
+{% block style %}
+    .form-element {
+        margin-bottom: 10px;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 70px; text-align: center;">Создать регистрационный ключ</h1>
+
+    <div style="width: 70%; text-align: center; display: inline-block;">
+        <form action="/admin/emitAuthToken" method="post">
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Должность</span>
+                </div>
+                <select class="form-control" name="position">
+                    <option value="admin">Администратор</option>
+                    <option value="editor" selected>Редактор</option>
+                    <option value="manager">Менеджер</option>
+                    <option value="orders_manager">Менеджер по обслуживанию заказов</option>
+                </select>
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Телефон</span>
+                </div>
+                <input type="number" class="form-control" name="phone">
+            </div>
+            {% if auth_token %}
+                <div class="input-group form-element">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Ключ</span>
+                    </div>
+                    <input type="text" class="form-control" value="{{ auth_token }}">
+                </div>
+            {% endif %}
+            <button class="btn btn-outline-secondary add-btn" type="submit">Сгенерировать ключ</button>
+        </form>
+    </div>
+{% endblock %}

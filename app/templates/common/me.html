@@ -1,0 +1,109 @@
+
+<div style="width: 70%; text-align: center; display: inline-block;">
+    <form id="editAuthorForm" action="/{{ position }}/me" method="post">
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">ФИО</span>
+            </div>
+            <input type="text" class="form-control" name="employee_full_name" value="{{ employee[1] }}">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">ИНН</span>
+            </div>
+            <input type="number" class="form-control" name="employee_itn" value="{{ employee[2] }}">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Серия/номер паспорта</span>
+            </div>
+            <input type="number" class="form-control" name="employee_passport" value="{{ employee[3] }}">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Адрес</span>
+            </div>
+            <input type="text" class="form-control" name="employee_address" value="{{ employee[4] }}">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Номер телефона</span>
+            </div>
+            <input type="number" class="form-control" name="employee_phone_number" value="{{ employee[5] }}">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Пол</span>
+            </div>
+            <select id="employeeSex" class="form-control" name="employee_sex">
+                <option value="male">Мужской</option>
+                <option value="female">Женский</option>
+            </select>
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Дата рождения</span>
+            </div>
+            <input type="date" class="form-control" name="employee_birthdate" value="{{ employee[7] }}">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Зарплата</span>
+            </div>
+            <input type="number" class="form-control" name="employee_salary" value="{{ employee[8] }}">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Должность</span>
+            </div>
+            <select id="employeePosition" class="form-control" name="position" disabled>
+                <option value="admin">Администратор</option>
+                <option value="editor">Редактор</option>
+                <option value="manager">Менеджер</option>
+                <option value="orders_manager">Менеджер по обслуживанию заказов</option>
+            </select>
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Пароль</span>
+            </div>
+            <input type="password" class="form-control" name="employee_password">
+        </div>
+
+        <h1 style="margin-bottom: 50px; margin-top: 70px; text-align: center;">Изменить пароль</h1>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Новый пароль</span>
+            </div>
+            <input type="password" class="form-control" name="employee_new_password">
+        </div>
+        <div class="input-group form-element">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Подтверждение пароля</span>
+            </div>
+            <input type="password" class="form-control" name="employee_new_password_confirmation">
+        </div>
+        <button class="btn btn-outline-secondary add-btn" type="submit">Редактировать</button>
+    </form>
+
+    <script>
+        let position = "{{ position }}";
+        let sex = "{{ employee[6] }}";
+
+        if (sex == "Мужской") {
+            document.getElementById("employeeSex").value = "male";
+        } else {
+            document.getElementById("employeeSex").value = "female";
+        }
+
+        if (position == "editor") {
+            document.getElementById("employeePosition").value = "editor";
+        } else if (position == "admin") {
+            document.getElementById("employeePosition").value = "admin";
+        } else if (position == "manager") {
+            document.getElementById("employeePosition").value = "manager";
+        } else {
+            document.getElementById("employeePosition").value = "orders_manager";
+        }
+    </script>
+</div>

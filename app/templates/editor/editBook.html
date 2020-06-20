@@ -1,0 +1,190 @@
+{% extends "editor/base.html" %}
+
+{% block style %}
+    .form-element {
+        margin-bottom: 10px;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Редактировать книгу</h1>
+
+    <div style="width: 70%; text-align: center; display: inline-block;">
+        <form action="/editor/book/{{ book[0] }}" method="post" id="edit-book-form">
+            <input id="isDelete" type="hidden" name="isDelete" value="false">
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Название</span>
+                </div>
+                <input type="text" class="form-control" name="title" value="{{ book[1] }}" disabled>
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Тираж</span>
+                </div>
+                <input type="number" class="form-control" name="circulation" value="{{ book[2] }}">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дата издания</span>
+                </div>
+                <input type="date" class="form-control" name="release_date" value="{{ book[3] }}">
+            </div>
+            <div class="input-group form-element">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Себестоимость</span>
+                </div>
+                <input type="number" class="form-control" name="cost_price" value="{{ book[4] }}">
+            </div>
+
+            <h2 style="margin-bottom: 50px; margin-top: 40px; text-align: center;">Авторы</h2>
+            <div id="authors-controls" style="padding-left: 17px;">
+                <div class="row" style="margin-bottom: 30px;">
+                    <div style="width: 70%;">
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Имя</span>
+                            </div>
+                            <input type="text" class="form-control" name="author_name" value="{{ first_author[0] }}">
+                        </div>
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Гонорар</span>
+                            </div>
+                            <input type="number" class="form-control" name="author_fee" value="{{ first_author[1] }}">
+                        </div>
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-danger add-btn" onclick="removeAuthor(this)" type="button" value="-" disabled>
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-secondary add-btn" onclick="addAuthor(this)" type="button" value="+">
+                    </div>
+                </div>
+                {% for author in authors %}
+                <div class="row" style="margin-bottom: 30px;">
+                    <div style="width: 70%;">
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Имя</span>
+                            </div>
+                            <input type="text" class="form-control" name="author_name" value="{{ author[0] }}">
+                        </div>
+                        <div class="input-group form-element">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Гонорар</span>
+                            </div>
+                            <input type="number" class="form-control" name="author_fee" value="{{ author[1] }}">
+                        </div>
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-danger add-btn" onclick="removeAuthor(this)" type="button" value="-">
+                    </div>
+                    <div class="control-authors-button-delete" style="width: 10%;">
+                        <input class="btn btn-outline-secondary add-btn" onclick="addAuthor(this)" type="button" value="+">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <script>
+                function addAuthor(element) {
+                    let newAuthor = document.createElement('div');
+                    newAuthor.innerHTML =
+                        '<div class="row" style="margin-bottom: 30px;">\n' +
+                        '                    <div style="width: 70%;">\n' +
+                        '                        <div class="input-group form-element">\n' +
+                        '                            <div class="input-group-prepend">\n' +
+                        '                                <span class="input-group-text">Имя</span>\n' +
+                        '                            </div>\n' +
+                        '                            <input type="text" class="form-control" name="author_name">\n' +
+                        '                        </div>\n' +
+                        '                        <div class="input-group form-element">\n' +
+                        '                            <div class="input-group-prepend">\n' +
+                        '                                <span class="input-group-text">Гонорар</span>\n' +
+                        '                            </div>\n' +
+                        '                            <input type="number" class="form-control" name="author_fee">\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="control-authors-button-delete" style="width: 10%;">\n' +
+                        '                        <input class="btn btn-outline-danger add-btn" onclick="removeAuthor(this)" type="button" value="-">\n' +
+                        '                    </div>\n' +
+                        '                    <div class="control-authors-button-delete" style="width: 10%;">\n' +
+                        '                        <input class="btn btn-outline-secondary add-btn" onclick="addAuthor(this)" type="button" value="+">\n' +
+                        '                    </div>\n' +
+                        '                </div>';
+
+                    let refElement = element.parentElement.parentElement;
+                    document.getElementById("authors-controls").insertBefore(newAuthor.firstChild, refElement.nextSibling);
+                }
+
+                function removeAuthor(element) {
+                    element.parentElement.parentElement.remove();
+                }
+            </script>
+
+            <h2 style="margin-bottom: 30px; margin-top: 40px; text-align: center;">Редакторы</h2>
+
+            <div style="margin-bottom: 30px; text-align: center;">
+                {% if editor_status == 1 %}
+                <button class="btn btn-outline-info add-btn" type="submit" name="changeEditorStatus" value="1">Стать редактором</button>
+                {% elif editor_status == 2 %}
+                <button class="btn btn-outline-info add-btn" type="submit" name="changeEditorStatus" value="2">Перестать быть редактором</button>
+                {% endif %}
+            </div>
+            <div class="scrollable-table">
+                <div class="table-responsive">
+                    <table id="bookEditorsTable" class="table table-hover table-striped table-bordered dataTable">
+                        <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Телефон</th>
+                                <th>Главный редактор</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in editors %}
+                                <tr>
+                                    <td>{{ row[1] }}</td>
+                                    <td>{{ row[2] }}</td>
+                                    <td>
+                                        {% if row[3] %}
+                                            +
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 40px;">
+                <div class="col">
+                    <button class="btn btn-outline-secondary add-btn" type="submit">Редактировать</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-danger add-btn" onclick="deleteBook()" type="submit">Удалить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+    function deleteBook() {
+        document.getElementById("isDelete").value = "true";
+    }
+
+    $('#bookEditorsTable').DataTable({
+        scrollY: 500,
+        scrollCollapse: true,
+        paging: false,
+        searching: false,
+        ordering: false,
+        info: false
+    });
+{% endblock %}

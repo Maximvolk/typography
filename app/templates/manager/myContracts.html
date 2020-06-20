@@ -1,0 +1,41 @@
+{% extends "manager/base.html" %}
+
+{% block content %}
+    <h1 style="margin-bottom: 50px; text-align: center;">Мои контракты</h1>
+
+    <div class="scrollable-table">
+        <div class="table-responsive">
+            <table id="myContractsTable" class="table table-hover table-striped table-bordered dataTable">
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Название книги</th>
+                        <th>Имя менеджера</th>
+                        <th>Дата подписания</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in contracts %}
+                        <tr data-href="/manager/contracts/{{ row[0] }}">
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    $('#myContractsTable').DataTable({
+        scrollY: 500,
+        scrollCollapse: true,
+        paging: false,
+        searching: false,
+        ordering: false,
+        info: false
+    });
+{% endblock %}
